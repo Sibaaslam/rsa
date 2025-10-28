@@ -8,8 +8,10 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
-
 steps:
+- script: mvn dependency:purge-local-repository
+  displayName: 'Clean old dependencies'
+
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
@@ -19,7 +21,7 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    goals: 'clean package'
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(System.DefaultWorkingDirectory)/webapp/target'
