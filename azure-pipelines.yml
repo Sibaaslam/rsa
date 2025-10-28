@@ -7,8 +7,19 @@ trigger:
 - master
 
 pool:
- vmImage: ubuntu-latest
+ vmImage: 'ubuntu-latest'
 steps:
+- task: JavaToolInstaller@1
+  inputs:
+    versionSpec: '17'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+
+- script: |
+    echo "JAVA_HOME is set to: $Env:JAVA_HOME"
+    java -version
+    mvn -version
+  displayName: 'Verify Java 17 Installation'
 
 - script: mvn dependency:purge-local-repository
   displayName: 'Clean old dependencies'
