@@ -9,6 +9,11 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 steps:
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '17'
+    jdkArchitectureOption: 'x64'
+    
 - script: mvn dependency:purge-local-repository
   displayName: 'Clean old dependencies'
 
